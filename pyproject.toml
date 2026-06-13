@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "historia-mcp"
+version = "0.1.0"
+description = "Kenya and East Africa historical archives via MCP. 6 tools. Thesis L1: Open Knowledge Infrastructure"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+dependencies = ["fastmcp>=0.9"]
+
+[project.scripts]
+historia-mcp = "historia_mcp.server:mcp.run"
+
+[tool.setuptools.packages.find]
+where = ["src"]
