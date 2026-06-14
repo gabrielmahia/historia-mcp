@@ -1,0 +1,63 @@
+{
+  "$schema": "https://glama.ai/mcp/schemas/1.0.0/server.json",
+  "name": "historia-mcp",
+  "version": "0.1.0",
+  "description": "MCP server for Kenya and East Africa historical archives \u2014 timelines from 3000 BCE to 2022, independence leaders, cultural heritage sites, ethnic groups guide, oral history resources, and historical documents. 6 tools.",
+  "license": "MIT",
+  "homepage": "https://gabrielmahia.github.io",
+  "author": {
+    "name": "Gabriel Mahia",
+    "email": "contact@aikungfu.dev",
+    "url": "https://gabrielmahia.github.io"
+  },
+  "keywords": [
+    "kenya",
+    "history",
+    "east-africa",
+    "heritage",
+    "culture",
+    "independence",
+    "mcp",
+    "civic"
+  ],
+  "categories": [
+    "Art & Culture",
+    "Research & Data",
+    "Education & Learning Tools"
+  ],
+  "tools": [
+    {
+      "name": "kenya_timeline",
+      "description": "Kenya timeline 3000BCE\u20132022"
+    },
+    {
+      "name": "independence_leaders",
+      "description": "Independence leaders profiles"
+    },
+    {
+      "name": "heritage_sites",
+      "description": "Cultural heritage sites"
+    },
+    {
+      "name": "ethnic_groups_guide",
+      "description": "Ethnic groups guide"
+    },
+    {
+      "name": "oral_history_resources",
+      "description": "Oral history resources"
+    },
+    {
+      "name": "historical_documents",
+      "description": "Historical documents directory"
+    }
+  ],
+  "installation": {
+    "type": "pip",
+    "package": "historia-mcp",
+    "command": "pip install historia-mcp"
+  },
+  "links": {
+    "github": "https://github.com/gabrielmahia/historia-mcp",
+    "pypi": "https://pypi.org/project/historia-mcp"
+  }
+}
