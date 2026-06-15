@@ -2,7 +2,7 @@
 from __future__ import annotations
 from typing import Optional
 from fastmcp import FastMCP
-mcp = FastMCP(name="historia-mcp", description="Kenya and East Africa historical archives via MCP. DEMO.")
+mcp = FastMCP(name="historia-mcp", instructions="Kenya and East Africa historical archives via MCP. DEMO.")
 
 TIMELINE = [
     {"year": 3000, "event": "Cushitic-speaking herders settle in northern Kenya (earliest known inhabitants)"},
