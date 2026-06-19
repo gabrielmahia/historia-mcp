@@ -1,5 +1,8 @@
 # historia-mcp
 
+[![historia-mcp Glama score](https://glama.ai/mcp/servers/gabrielmahia/historia-mcp/badges/score.svg)](https://glama.ai/mcp/servers/gabrielmahia/historia-mcp)
+
+
 > Kenya and East Africa historical archives via MCP — timeline, leaders, heritage sites, oral history.
 
 [![PyPI](https://img.shields.io/badge/PyPI-v0.1.0-blue?logo=pypi)](https://pypi.org/project/historia-mcp/)
