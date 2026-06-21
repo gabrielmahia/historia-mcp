@@ -1,6 +1,6 @@
 """HistoriaMCP — Kenya & East Africa Historical Archives (6 tools). All data DEMO."""
 from __future__ import annotations
-from typing import Optional
+from typing import Annotated, Optional
 from fastmcp import FastMCP
 from pydantic import Field
 mcp = FastMCP(name="historia-mcp", instructions="Kenya and East Africa historical archives via MCP. DEMO.")
@@ -32,7 +32,7 @@ TIMELINE = [
     {"year": 2022, "event": "William Ruto elected President — first time a deputy president wins"},
 ]
 
-@mcp.tool(name="kenya_history_timeline", description="Kenya historical timeline from ancient times to present. DEMO.")
+@mcp.tool(name="kenya_history_timeline", description="Kenya historical timeline from ancient times to present. DEMO.", annotations={"readOnlyHint": True, "openWorldHint": False})
 def kenya_history_timeline(start_year: Optional[int] = Field(None, description="Filter events from this year e.g. 1900, 1963 (independence). Leave empty for full timeline."), end_year: Optional[int] = Field(None, description="Filter events up to this year e.g. 2010, 2024. Leave empty for no end limit.")) -> dict:
     events = TIMELINE
     if start_year: events = [e for e in events if e["year"] >= start_year]
@@ -40,7 +40,7 @@ def kenya_history_timeline(start_year: Optional[int] = Field(None, description="
     return {"source": "DEMO — Kenya National Archives reference", "events": events,
             "total": len(events), "archive": "archives.go.ke | Kenya National Archives"}
 
-@mcp.tool(name="independence_leaders", description="Kenya independence movement leaders and their roles. DEMO.")
+@mcp.tool(name="independence_leaders", description="Kenya independence movement leaders and their roles. DEMO.", annotations={"readOnlyHint": True, "openWorldHint": False})
 def independence_leaders() -> dict:
     return {"source": "DEMO — Kenya National Archives, Kenya History Project",
             "leaders": [
@@ -64,7 +64,7 @@ def independence_leaders() -> dict:
                  "significance": "Founded Green Belt Movement. First African woman Nobel Peace Prize laureate (2004). MP for Tetu."},
             ]}
 
-@mcp.tool(name="cultural_heritage_sites", description="Kenya UNESCO and national heritage sites. DEMO.")
+@mcp.tool(name="cultural_heritage_sites", description="Kenya UNESCO and national heritage sites. DEMO.", annotations={"readOnlyHint": True, "openWorldHint": False})
 def cultural_heritage_sites(region: Optional[str] = Field(None, description="Kenya region or county e.g. 'Coast', 'Nairobi', 'Rift Valley'. Leave empty for national heritage sites.")) -> dict:
     """Return UNESCO and national cultural heritage sites and landmarks in Kenya."""
     SITES = [
@@ -92,7 +92,7 @@ def cultural_heritage_sites(region: Optional[str] = Field(None, description="Ken
     return {"source": "DEMO — Kenya National Museums, UNESCO", "sites": SITES,
             "national_museums": "museums.or.ke | National Museums of Kenya"}
 
-@mcp.tool(name="ethnic_groups_guide", description="Kenya major ethnic groups, cultures, and communities. DEMO.")
+@mcp.tool(name="ethnic_groups_guide", description="Kenya major ethnic groups, cultures, and communities. DEMO.", annotations={"readOnlyHint": True, "openWorldHint": False})
 def ethnic_groups_guide(group: Optional[str] = Field(None, description="Ethnic group name e.g. 'Kikuyu', 'Luo', 'Kalenjin', 'Luhya', 'Kamba'. Leave empty for overview of all major groups.")) -> dict:
     """Return cultural, linguistic, and historical information about Kenya ethnic groups."""
     GROUPS = {
@@ -115,7 +115,7 @@ def ethnic_groups_guide(group: Optional[str] = Field(None, description="Ethnic g
     return {"source": "DEMO — KNBS 2019 Census", "groups": GROUPS, "total_groups": "44+ officially recognised",
             "note": "Kenya's diversity is a strength. The constitution protects cultural rights of all communities."}
 
-@mcp.tool(name="oral_history_resources", description="Kenya and East Africa oral history archives and preservation resources. DEMO.")
+@mcp.tool(name="oral_history_resources", description="Kenya and East Africa oral history archives and preservation resources. DEMO.", annotations={"readOnlyHint": True, "openWorldHint": False})
 def oral_history_resources() -> dict:
     return {"source": "DEMO — Kenya memory institutions",
             "why_important": "East Africa's history is primarily oral. Written records from colonialism are incomplete and biased. Oral traditions preserve indigenous knowledge, genealogies, customary law, and cultural practices.",
@@ -139,7 +139,7 @@ def oral_history_resources() -> dict:
                 "Masakhane NLP — training AI models on African language oral texts",
             ]}
 
-@mcp.tool(name="historical_documents", description="Where to access historical Kenya and East Africa documents. DEMO.")
+@mcp.tool(name="historical_documents", description="Where to access historical Kenya and East Africa documents. DEMO.", annotations={"readOnlyHint": True, "openWorldHint": False})
 def historical_documents(document_type: Optional[str] = Field(None, description="Document category e.g. 'constitution', 'treaty', 'independence', 'land'. Leave empty for full document catalogue.")) -> dict:
     """Return references to historical documents, treaties, and constitutional texts relevant to Kenya."""
     SOURCES = {
