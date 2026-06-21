@@ -2,6 +2,7 @@
 from __future__ import annotations
 from typing import Optional
 from fastmcp import FastMCP
+from pydantic import Field
 mcp = FastMCP(name="historia-mcp", instructions="Kenya and East Africa historical archives via MCP. DEMO.")
 
 TIMELINE = [
@@ -32,7 +33,7 @@ TIMELINE = [
 ]
 
 @mcp.tool(name="kenya_history_timeline", description="Kenya historical timeline from ancient times to present. DEMO.")
-def kenya_history_timeline(start_year: Optional[int] = None, end_year: Optional[int] = None) -> dict:
+def kenya_history_timeline(start_year: Optional[int] = Field(None, description="Filter events from this year e.g. 1900, 1963 (independence). Leave empty for full timeline."), end_year: Optional[int] = Field(None, description="Filter events up to this year e.g. 2010, 2024. Leave empty for no end limit.")) -> dict:
     events = TIMELINE
     if start_year: events = [e for e in events if e["year"] >= start_year]
     if end_year: events = [e for e in events if e["year"] <= end_year]
@@ -64,7 +65,8 @@ def independence_leaders() -> dict:
             ]}
 
 @mcp.tool(name="cultural_heritage_sites", description="Kenya UNESCO and national heritage sites. DEMO.")
-def cultural_heritage_sites(region: Optional[str] = None) -> dict:
+def cultural_heritage_sites(region: Optional[str] = Field(None, description="Kenya region or county e.g. 'Coast', 'Nairobi', 'Rift Valley'. Leave empty for national heritage sites.")) -> dict:
+    """Return UNESCO and national cultural heritage sites and landmarks in Kenya."""
     SITES = [
         {"name": "Lamu Old Town", "type": "UNESCO World Heritage", "region": "Coast",
          "significance": "Best-preserved Swahili settlement in East Africa. Founded 14th century. Coral architecture.",
@@ -91,7 +93,8 @@ def cultural_heritage_sites(region: Optional[str] = None) -> dict:
             "national_museums": "museums.or.ke | National Museums of Kenya"}
 
 @mcp.tool(name="ethnic_groups_guide", description="Kenya major ethnic groups, cultures, and communities. DEMO.")
-def ethnic_groups_guide(group: Optional[str] = None) -> dict:
+def ethnic_groups_guide(group: Optional[str] = Field(None, description="Ethnic group name e.g. 'Kikuyu', 'Luo', 'Kalenjin', 'Luhya', 'Kamba'. Leave empty for overview of all major groups.")) -> dict:
+    """Return cultural, linguistic, and historical information about Kenya ethnic groups."""
     GROUPS = {
         "Kikuyu": {"population_pct": 17.1, "region": "Central Kenya (Mt. Kenya region)", "language": "Gĩkũyũ (Bantu)", "known_for": "Agriculture, business, coffee and tea farming. Largest ethnic group."},
         "Luhya": {"population_pct": 14.3, "region": "Western Kenya", "language": "Multiple Luhya dialects (Bantu)", "known_for": "Agriculture, diversity (18 sub-groups), progressive politics."},
@@ -137,7 +140,8 @@ def oral_history_resources() -> dict:
             ]}
 
 @mcp.tool(name="historical_documents", description="Where to access historical Kenya and East Africa documents. DEMO.")
-def historical_documents(document_type: Optional[str] = None) -> dict:
+def historical_documents(document_type: Optional[str] = Field(None, description="Document category e.g. 'constitution', 'treaty', 'independence', 'land'. Leave empty for full document catalogue.")) -> dict:
+    """Return references to historical documents, treaties, and constitutional texts relevant to Kenya."""
     SOURCES = {
         "constitution_1963": {"description": "Kenya Independence Constitution 1963", "access": "kenyalaw.org", "free": True},
         "constitution_2010": {"description": "Kenya Constitution 2010 (current)", "access": "kenyalaw.org", "free": True},
