@@ -13,7 +13,6 @@
   "keywords": [
     "kenya",
     "history",
-    "east-africa",
     "heritage",
     "culture",
     "independence",
@@ -26,7 +25,9 @@
     "open-data",
     "coordination-infrastructure",
     "institutional-infrastructure",
-    "africa"
+    "africa",
+    "useful-rails",
+    "ai-agents"
   ],
   "categories": [
     "Art & Culture",
