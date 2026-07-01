@@ -4,6 +4,14 @@
 [![smithery badge](https://smithery.ai/badge/@gabrielmahia/historia-mcp)](https://smithery.ai/server/@gabrielmahia/historia-mcp)
 
 
+---
+**Compatible with `claude-sonnet-5`** (released 2026-06-30) — Anthropic's most agentic
+Sonnet yet. Runs multi-step tool chains end-to-end without stopping short.
+Install: `pip install historia-mcp` · Use with any MCP client.
+
+---
+
+
 > Kenya and East Africa historical archives via MCP — timeline, leaders, heritage sites, oral history.
 
 [![PyPI](https://img.shields.io/badge/PyPI-v0.1.0-blue?logo=pypi)](https://pypi.org/project/historia-mcp/)
