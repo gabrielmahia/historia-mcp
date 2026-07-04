@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "historia-mcp"
-version = "0.1.2"
+version = "0.1.3"
 description = "Kenya and Africa historical archives via MCP. 6 tools."
 readme = "README.md"
 license = { text = "MIT" }

@@ -1,4 +1,5 @@
 # historia-mcp
+<!-- mcp-name: io.github.gabrielmahia/historia-mcp -->
 
 [![historia-mcp Glama score](https://glama.ai/mcp/servers/gabrielmahia/historia-mcp/badges/score.svg)](https://glama.ai/mcp/servers/gabrielmahia/historia-mcp)
 [![smithery badge](https://smithery.ai/badge/@gabrielmahia/historia-mcp)](https://smithery.ai/server/@gabrielmahia/historia-mcp)

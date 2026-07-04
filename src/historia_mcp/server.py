@@ -158,3 +158,6 @@ def historical_documents(document_type: Annotated[Optional[str], "Document categ
     return {"source": "DEMO", "documents": SOURCES,
             "primary_portals": ["kenyalaw.org (Kenya Law)", "archives.go.ke (KNA)", "knchr.org (KNCHR)", "archive.org"]}
 
+def main() -> None:
+    """Console entry point."""
+    mcp.run()
