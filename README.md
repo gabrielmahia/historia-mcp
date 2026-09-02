@@ -1,44 +1,61 @@
 # historia-mcp
-<!-- mcp-name: io.github.gabrielmahia/historia-mcp -->
 
-[![historia-mcp Glama score](https://glama.ai/mcp/servers/gabrielmahia/historia-mcp/badges/score.svg)](https://glama.ai/mcp/servers/gabrielmahia/historia-mcp)
-[![smithery badge](https://smithery.ai/badge/@gabrielmahia/historia-mcp)](https://smithery.ai/server/@gabrielmahia/historia-mcp)
+## Why This Exists
 
-
----
-**Compatible with `claude-sonnet-5`** (released 2026-06-30) — Anthropic's most agentic
-Sonnet yet. Runs multi-step tool chains end-to-end without stopping short.
-Install: `pip install historia-mcp` · Use with any MCP client.
-
----
-
-
-> Kenya and East Africa historical archives via MCP — timeline, leaders, heritage sites, oral history.
-
-[![PyPI](https://img.shields.io/badge/PyPI-v0.1.0-blue?logo=pypi)](https://pypi.org/project/historia-mcp/)
-[![Thesis Layer](https://img.shields.io/badge/Thesis_Layer-L1_Open_Knowledge-green)](https://gabrielmahia.github.io/nairobi-stack)
-
-**1st world equivalent:** Wikipedia + Britannica + National Archives
+East African history is well documented but poorly structured for machines — timelines, independence-era figures, heritage sites and oral history sit in prose across archives. Making it queryable is what lets it be taught, cited and built on.
 
 ## Install
+
 ```bash
 pip install historia-mcp
 ```
 
 ## Tools (6)
-| Tool | Description |
-|------|-------------|
-| `kenya_history_timeline` | Kenya historical events from 3000 BCE to 2022 |
-| `independence_leaders` | Jomo Kenyatta, Oginga Odinga, Tom Mboya, Dedan Kimathi, Mekatilili wa Menza |
-| `cultural_heritage_sites` | UNESCO and national heritage sites across Kenya |
-| `ethnic_groups_guide` | Kenya's 44+ ethnic groups — demographics, language, culture |
-| `oral_history_resources` | Kenya National Archives, NMK, international digital archives |
-| `historical_documents` | Access points for Kenya constitutions, commission reports, colonial records |
 
-→ [The Nairobi Stack](https://gabrielmahia.github.io/nairobi-stack)
+- **`kenya_history_timeline`** —   
+  <sub>args: start_year, end_year</sub>
+- **`independence_leaders`** —   
+  <sub>args: no arguments</sub>
+- **`cultural_heritage_sites`** — Return UNESCO and national cultural heritage sites and landmarks in Kenya.  
+  <sub>args: region</sub>
+- **`ethnic_groups_guide`** — Return cultural, linguistic, and historical information about Kenya ethnic groups.  
+  <sub>args: group</sub>
+- **`oral_history_resources`** —   
+  <sub>args: no arguments</sub>
+- **`historical_documents`** — Return references to historical documents, treaties, and constitutional texts relevant to Kenya.  
+  <sub>args: document_type</sub>
 
-## License
-MIT © Gabriel Mahia | contact@aikungfu.dev
+## Example
+
+```python
+from historia_mcp.server import kenya_timeline
+
+result = kenya_timeline()
+# period, events, significance, further reading
+```
+
+## Claude Desktop Integration
+
+Add to `claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "historia-mcp": {
+      "command": "python",
+      "args": ["-m", "historia_mcp.server"]
+    }
+  }
+}
+```
+
+## Data & Disclaimers
+
+Historical reference material compiled from public sources. Oral history in particular carries contested interpretations; treat entries as a starting point for research, not a settled account.
+
+Every tool response carries a `source` field. Responses labelled `DEMO` are
+illustrative reference data, not a live feed — verify against the authority
+named in the response before acting on it.
 
 ## Part of the East Africa Coordination Stack
 
