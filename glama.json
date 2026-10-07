@@ -1,8 +1,8 @@
 {
   "$schema": "https://glama.ai/mcp/schemas/1.0.0/server.json",
   "name": "historia-mcp",
-  "version": "0.1.0",
-  "description": "MCP server for Kenya and East Africa historical archives \u2014 timelines from 3000 BCE to 2022, independence leaders, cultural heritage sites, ethnic groups guide, oral history resources, and historical documents. 6 tools.",
+  "version": "0.1.4",
+  "description": "Kenya and Africa historical archives via MCP",
   "license": "MIT",
   "homepage": "https://gabrielmahia.github.io",
   "author": {
@@ -36,28 +36,28 @@
   ],
   "tools": [
     {
-      "name": "kenya_timeline",
-      "description": "Kenya timeline 3000BCE\u20132022"
+      "name": "kenya_history_timeline",
+      "description": "Kenya historical timeline from ancient times to present. DEMO."
     },
     {
       "name": "independence_leaders",
-      "description": "Independence leaders profiles"
+      "description": "Kenya independence movement leaders and their roles. DEMO."
     },
     {
-      "name": "heritage_sites",
-      "description": "Cultural heritage sites"
+      "name": "cultural_heritage_sites",
+      "description": "Kenya UNESCO and national heritage sites. DEMO."
     },
     {
       "name": "ethnic_groups_guide",
-      "description": "Ethnic groups guide"
+      "description": "Kenya major ethnic groups, cultures, and communities. DEMO."
     },
     {
       "name": "oral_history_resources",
-      "description": "Oral history resources"
+      "description": "Kenya and East Africa oral history archives and preservation resources. DEMO."
     },
     {
       "name": "historical_documents",
-      "description": "Historical documents directory"
+      "description": "Where to access historical Kenya and East Africa documents. DEMO."
     }
   ],
   "installation": {
@@ -68,5 +68,8 @@
   "links": {
     "github": "https://github.com/gabrielmahia/historia-mcp",
     "pypi": "https://pypi.org/project/historia-mcp"
-  }
+  },
+  "maintainers": [
+    "gabrielmahia"
+  ]
 }
