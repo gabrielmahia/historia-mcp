@@ -1,4 +1,5 @@
 # historia-mcp
+<!-- mcp-name: io.github.gabrielmahia/historia-mcp -->
 
 ## Why This Exists
 

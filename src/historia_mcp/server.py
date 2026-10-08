@@ -1,7 +1,10 @@
 """HistoriaMCP — Kenya & East Africa Historical Archives (6 tools). All data DEMO."""
 from __future__ import annotations
+
 from typing import Annotated, Optional
+
 from fastmcp import FastMCP
+
 mcp = FastMCP(name="historia-mcp", instructions="Kenya and East Africa historical archives via MCP. DEMO.")
 
 TIMELINE = [
@@ -32,7 +35,7 @@ TIMELINE = [
 ]
 
 @mcp.tool(name="kenya_history_timeline", description="Kenya historical timeline from ancient times to present. DEMO.", annotations={"readOnlyHint": True, "openWorldHint": False})
-def kenya_history_timeline(start_year: Annotated[Optional[int], "Filter events from this year e.g. 1900, 1963 (independence). Leave empty for full timeline."] = None, end_year: Annotated[Optional[int], "Filter events up to this year e.g. 2010, 2024. Leave empty for no end limit."] = None) -> dict:
+def kenya_history_timeline(start_year: Annotated[int | None, "Filter events from this year e.g. 1900, 1963 (independence). Leave empty for full timeline."] = None, end_year: Annotated[int | None, "Filter events up to this year e.g. 2010, 2024. Leave empty for no end limit."] = None) -> dict:
     events = TIMELINE
     if start_year: events = [e for e in events if e["year"] >= start_year]
     if end_year: events = [e for e in events if e["year"] <= end_year]
@@ -64,7 +67,7 @@ def independence_leaders() -> dict:
             ]}
 
 @mcp.tool(name="cultural_heritage_sites", description="Kenya UNESCO and national heritage sites. DEMO.", annotations={"readOnlyHint": True, "openWorldHint": False})
-def cultural_heritage_sites(region: Annotated[Optional[str], "Kenya region or county e.g."] = None) -> dict:
+def cultural_heritage_sites(region: Annotated[str | None, "Kenya region or county e.g."] = None) -> dict:
     """Return UNESCO and national cultural heritage sites and landmarks in Kenya."""
     SITES = [
         {"name": "Lamu Old Town", "type": "UNESCO World Heritage", "region": "Coast",
@@ -92,7 +95,7 @@ def cultural_heritage_sites(region: Annotated[Optional[str], "Kenya region or co
             "national_museums": "museums.or.ke | National Museums of Kenya"}
 
 @mcp.tool(name="ethnic_groups_guide", description="Kenya major ethnic groups, cultures, and communities. DEMO.", annotations={"readOnlyHint": True, "openWorldHint": False})
-def ethnic_groups_guide(group: Annotated[Optional[str], "Ethnic group name e.g."] = None) -> dict:
+def ethnic_groups_guide(group: Annotated[str | None, "Ethnic group name e.g."] = None) -> dict:
     """Return cultural, linguistic, and historical information about Kenya ethnic groups."""
     GROUPS = {
         "Kikuyu": {"population_pct": 17.1, "region": "Central Kenya (Mt. Kenya region)", "language": "Gĩkũyũ (Bantu)", "known_for": "Agriculture, business, coffee and tea farming. Largest ethnic group."},
@@ -139,7 +142,7 @@ def oral_history_resources() -> dict:
             ]}
 
 @mcp.tool(name="historical_documents", description="Where to access historical Kenya and East Africa documents. DEMO.", annotations={"readOnlyHint": True, "openWorldHint": False})
-def historical_documents(document_type: Annotated[Optional[str], "Document category e.g."] = None) -> dict:
+def historical_documents(document_type: Annotated[str | None, "Document category e.g."] = None) -> dict:
     """Return references to historical documents, treaties, and constitutional texts relevant to Kenya."""
     SOURCES = {
         "constitution_1963": {"description": "Kenya Independence Constitution 1963", "access": "kenyalaw.org", "free": True},
