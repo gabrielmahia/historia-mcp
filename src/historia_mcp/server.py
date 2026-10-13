@@ -4,6 +4,7 @@ from __future__ import annotations
 from typing import Annotated, Optional
 
 from fastmcp import FastMCP
+from pydantic import Field
 
 mcp = FastMCP(name="historia-mcp", instructions="Kenya and East Africa historical archives via MCP. DEMO.")
 
@@ -34,15 +35,15 @@ TIMELINE = [
     {"year": 2022, "event": "William Ruto elected President — first time a deputy president wins"},
 ]
 
-@mcp.tool(name="kenya_history_timeline", description="Kenya historical timeline from ancient times to present. DEMO.", annotations={"readOnlyHint": True, "openWorldHint": False})
-def kenya_history_timeline(start_year: Annotated[int | None, "Filter events from this year e.g. 1900, 1963 (independence). Leave empty for full timeline."] = None, end_year: Annotated[int | None, "Filter events up to this year e.g. 2010, 2024. Leave empty for no end limit."] = None) -> dict:
+@mcp.tool(name="kenya_history_timeline", description="Key events in Kenya's history in date order, optionally limited to a range of years. Use when someone asks what happened in a period. start_year and end_year keep events from and up to those years (inclusive); with no events in range the list is empty. Returns the source label, the events, the total and an archives pointer. A short selection labelled DEMO, not a complete history: consult the Kenya National Archives. Read-only; no side effects.", annotations={"readOnlyHint": True, "openWorldHint": False})
+def kenya_history_timeline(start_year: Annotated[Annotated[int | None, Field(description="Optional first year to include.")], "Filter events from this year e.g. 1900, 1963 (independence). Leave empty for full timeline."] = None, end_year: Annotated[Annotated[int | None, Field(description="Optional last year to include.")], "Filter events up to this year e.g. 2010, 2024. Leave empty for no end limit."] = None) -> dict:
     events = TIMELINE
     if start_year: events = [e for e in events if e["year"] >= start_year]
     if end_year: events = [e for e in events if e["year"] <= end_year]
     return {"source": "DEMO — Kenya National Archives reference", "events": events,
             "total": len(events), "archive": "archives.go.ke | Kenya National Archives"}
 
-@mcp.tool(name="independence_leaders", description="Kenya independence movement leaders and their roles. DEMO.", annotations={"readOnlyHint": True, "openWorldHint": False})
+@mcp.tool(name="independence_leaders", description="Profiles of key figures in Kenya's struggle for independence and early nationhood, with their roles, years and significance. Use when someone asks who the independence leaders were. Takes no arguments. Returns the source label and the leaders. A short selection labelled DEMO and not exhaustive: many contributors, including women and rural fighters, are not listed. Read-only; no side effects.", annotations={"readOnlyHint": True, "openWorldHint": False})
 def independence_leaders() -> dict:
     return {"source": "DEMO — Kenya National Archives, Kenya History Project",
             "leaders": [
@@ -66,8 +67,8 @@ def independence_leaders() -> dict:
                  "significance": "Founded Green Belt Movement. First African woman Nobel Peace Prize laureate (2004). MP for Tetu."},
             ]}
 
-@mcp.tool(name="cultural_heritage_sites", description="Kenya UNESCO and national heritage sites. DEMO.", annotations={"readOnlyHint": True, "openWorldHint": False})
-def cultural_heritage_sites(region: Annotated[str | None, "Kenya region or county e.g."] = None) -> dict:
+@mcp.tool(name="cultural_heritage_sites", description="Sample Kenyan cultural and natural heritage sites (UNESCO and national) with region and significance. Use when someone asks about heritage sites in a region. region filters by matching text; if nothing matches, ALL sites are returned and region_matched is false. Returns the source label, the sites, region_matched and a National Museums of Kenya pointer. A short sample labelled DEMO, not a full register. Read-only; no side effects.", annotations={"readOnlyHint": True, "openWorldHint": False})
+def cultural_heritage_sites(region: Annotated[Annotated[str | None, Field(description="Optional region such as Coast or Rift Valley; unmatched values return all sites.")], "Kenya region or county e.g."] = None) -> dict:
     """Return UNESCO and national cultural heritage sites and landmarks in Kenya."""
     SITES = [
         {"name": "Lamu Old Town", "type": "UNESCO World Heritage", "region": "Coast",
@@ -89,24 +90,27 @@ def cultural_heritage_sites(region: Annotated[str | None, "Kenya region or count
         {"name": "Thimlich Ohinga", "type": "UNESCO World Heritage", "region": "Nyanza",
          "significance": "Largest and best-preserved dry-stone walled enclosure in East Africa. Built ~500 AD."},
     ]
+    region_matched = None
     if region:
-        SITES = [s for s in SITES if region.lower() in s["region"].lower()] or SITES
-    return {"source": "DEMO — Kenya National Museums, UNESCO", "sites": SITES,
+        by_region = [s for s in SITES if region.lower() in s["region"].lower()]
+        region_matched = bool(by_region)
+        SITES = by_region or SITES
+    return {"source": "DEMO — Kenya National Museums, UNESCO", "sites": SITES, "region_matched": region_matched,
             "national_museums": "museums.or.ke | National Museums of Kenya"}
 
-@mcp.tool(name="ethnic_groups_guide", description="Kenya major ethnic groups, cultures, and communities. DEMO.", annotations={"readOnlyHint": True, "openWorldHint": False})
-def ethnic_groups_guide(group: Annotated[str | None, "Ethnic group name e.g."] = None) -> dict:
+@mcp.tool(name="ethnic_groups_guide", description="Population share, region, language and notable traits for Kenya's larger ethnic groups, computed from the 2019 census counts (total 47.6 million), or an overview of all. Use when someone asks about a community's size or home region. group is matched by name; a group not in the sample returns a note, not a guess. Returns the source label, the group and its info, or all groups with a total-groups note. Shares are percentages of the national population; the descriptions are broad generalisations labelled DEMO and no community is homogeneous. Read-only; no side effects.", annotations={"readOnlyHint": True, "openWorldHint": False})
+def ethnic_groups_guide(group: Annotated[Annotated[str | None, Field(description="Optional community name such as Luo; omit for all.")], "Ethnic group name e.g."] = None) -> dict:
     """Return cultural, linguistic, and historical information about Kenya ethnic groups."""
     GROUPS = {
         "Kikuyu": {"population_pct": 17.1, "region": "Central Kenya (Mt. Kenya region)", "language": "Gĩkũyũ (Bantu)", "known_for": "Agriculture, business, coffee and tea farming. Largest ethnic group."},
         "Luhya": {"population_pct": 14.3, "region": "Western Kenya", "language": "Multiple Luhya dialects (Bantu)", "known_for": "Agriculture, diversity (18 sub-groups), progressive politics."},
-        "Kalenjin": {"population_pct": 13.9, "region": "Rift Valley", "language": "Kalenjin (Nilotic)", "known_for": "Long-distance running. William Ruto is Kalenjin. 11+ sub-groups."},
-        "Luo": {"population_pct": 10.5, "region": "Nyanza / Lake Victoria basin", "language": "Dholuo (Nilotic)", "known_for": "Fishing, education, music, political activism. Raila Odinga is Luo."},
-        "Kamba": {"population_pct": 10.1, "region": "Eastern Kenya", "language": "Kikamba (Bantu)", "known_for": "Wood carving, military service, trade routes. Machakos, Kitui, Makueni counties."},
-        "Somali": {"population_pct": 6.2, "region": "Northern Kenya (NFD)", "language": "Somali (Cushitic)", "known_for": "Pastoralism, trade, Islam. Mainly in Garissa, Wajir, Mandera counties."},
+        "Kalenjin": {"population_pct": 13.4, "region": "Rift Valley", "language": "Kalenjin (Nilotic)", "known_for": "Long-distance running and Rift Valley athletics. 11+ sub-groups."},
+        "Luo": {"population_pct": 10.7, "region": "Nyanza / Lake Victoria basin", "language": "Dholuo (Nilotic)", "known_for": "Fishing, education, music, political activism (Tom Mboya and Jaramogi Oginga Odinga were Luo)."},
+        "Kamba": {"population_pct": 9.8, "region": "Eastern Kenya", "language": "Kikamba (Bantu)", "known_for": "Wood carving, military service, trade routes. Machakos, Kitui, Makueni counties."},
+        "Somali": {"population_pct": 5.8, "region": "Northern Kenya (NFD)", "language": "Somali (Cushitic)", "known_for": "Pastoralism, trade, Islam. Mainly in Garissa, Wajir, Mandera counties."},
         "Kisii": {"population_pct": 5.7, "region": "Nyanza / Kisii highlands", "language": "Ekegusii (Bantu)", "known_for": "Dense population, agriculture (tea, banana), soapstone carving."},
         "Mijikenda": {"population_pct": 5.2, "region": "Coast", "language": "Mijikenda dialects (Bantu)", "known_for": "9 sub-groups. Kaya forests (UNESCO heritage). Swahili coast culture."},
-        "Meru": {"population_pct": 4.3, "region": "Mt. Kenya region", "language": "Kimeru (Bantu)", "known_for": "Miraa (khat) production, Mount Kenya access, conservative traditions."},
+        "Meru": {"population_pct": 4.2, "region": "Mt. Kenya region", "language": "Kimeru (Bantu)", "known_for": "Miraa (khat) production, Mount Kenya access, conservative traditions."},
         "Maasai": {"population_pct": 2.5, "region": "Rift Valley, Kajiado, Narok", "language": "Maa (Nilotic)", "known_for": "Pastoralism, warrior traditions, beadwork, iconic international recognition."},
     }
     if group:
@@ -117,7 +121,7 @@ def ethnic_groups_guide(group: Annotated[str | None, "Ethnic group name e.g."] =
     return {"source": "DEMO — KNBS 2019 Census", "groups": GROUPS, "total_groups": "44+ officially recognised",
             "note": "Kenya's diversity is a strength. The constitution protects cultural rights of all communities."}
 
-@mcp.tool(name="oral_history_resources", description="Kenya and East Africa oral history archives and preservation resources. DEMO.", annotations={"readOnlyHint": True, "openWorldHint": False})
+@mcp.tool(name="oral_history_resources", description="Institutions and projects that hold or digitise Kenya's oral histories and archives. Use when someone asks where to find oral history sources. Takes no arguments. Returns the source label, why oral history matters, the institutions and preservation projects. A starting list labelled DEMO: check each institution's access terms. Read-only; no side effects.", annotations={"readOnlyHint": True, "openWorldHint": False})
 def oral_history_resources() -> dict:
     return {"source": "DEMO — Kenya memory institutions",
             "why_important": "East Africa's history is primarily oral. Written records from colonialism are incomplete and biased. Oral traditions preserve indigenous knowledge, genealogies, customary law, and cultural practices.",
@@ -141,8 +145,8 @@ def oral_history_resources() -> dict:
                 "Masakhane NLP — training AI models on African language oral texts",
             ]}
 
-@mcp.tool(name="historical_documents", description="Where to access historical Kenya and East Africa documents. DEMO.", annotations={"readOnlyHint": True, "openWorldHint": False})
-def historical_documents(document_type: Annotated[str | None, "Document category e.g."] = None) -> dict:
+@mcp.tool(name="historical_documents", description="Where to find key Kenyan historical documents (constitutions, colonial records, commission reports) in digital archives. Use when someone asks where to read a primary source. document_type matches by name or description; an unmatched type returns a note pointing to Kenya Law and the National Archives. Returns the source label, the document and the sources found, or all sources and the main portals. A pointer list labelled DEMO: availability changes. Read-only; no side effects.", annotations={"readOnlyHint": True, "openWorldHint": False})
+def historical_documents(document_type: Annotated[Annotated[str | None, Field(description="Optional document kind such as constitution or commission report.")], "Document category e.g."] = None) -> dict:
     """Return references to historical documents, treaties, and constitutional texts relevant to Kenya."""
     SOURCES = {
         "constitution_1963": {"description": "Kenya Independence Constitution 1963", "access": "kenyalaw.org", "free": True},
