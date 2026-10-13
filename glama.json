@@ -37,27 +37,27 @@
   "tools": [
     {
       "name": "kenya_history_timeline",
-      "description": "Kenya historical timeline from ancient times to present. DEMO."
+      "description": "Key events in Kenya's history in date order, optionally limited to a range of years. Use when someone asks what happened in a period. start_year and end_year keep events from and up to those years (inclusive); with no events in range the list is empty. Returns the source label, the events, the total and an archives pointer. A short selection labelled DEMO, not a complete history: consult the Kenya National Archives. Read-only; no side effects."
     },
     {
       "name": "independence_leaders",
-      "description": "Kenya independence movement leaders and their roles. DEMO."
+      "description": "Profiles of key figures in Kenya's struggle for independence and early nationhood, with their roles, years and significance. Use when someone asks who the independence leaders were. Takes no arguments. Returns the source label and the leaders. A short selection labelled DEMO and not exhaustive: many contributors, including women and rural fighters, are not listed. Read-only; no side effects."
     },
     {
       "name": "cultural_heritage_sites",
-      "description": "Kenya UNESCO and national heritage sites. DEMO."
+      "description": "Sample Kenyan cultural and natural heritage sites (UNESCO and national) with region and significance. Use when someone asks about heritage sites in a region. region filters by matching text; if nothing matches, ALL sites are returned and region_matched is false. Returns the source label, the sites, region_matched and a National Museums of Kenya pointer. A short sample labelled DEMO, not a full register. Read-only; no side effects."
     },
     {
       "name": "ethnic_groups_guide",
-      "description": "Kenya major ethnic groups, cultures, and communities. DEMO."
+      "description": "Population share, region, language and notable traits for Kenya's larger ethnic groups, computed from the 2019 census counts (total 47.6 million), or an overview of all. Use when someone asks about a community's size or home region. group is matched by name; a group not in the sample returns a note, not a guess. Returns the source label, the group and its info, or all groups with a total-groups note. Shares are percentages of the national population; the descriptions are broad generalisations labelled DEMO and no community is homogeneous. Read-only; no side effects."
     },
     {
       "name": "oral_history_resources",
-      "description": "Kenya and East Africa oral history archives and preservation resources. DEMO."
+      "description": "Institutions and projects that hold or digitise Kenya's oral histories and archives. Use when someone asks where to find oral history sources. Takes no arguments. Returns the source label, why oral history matters, the institutions and preservation projects. A starting list labelled DEMO: check each institution's access terms. Read-only; no side effects."
     },
     {
       "name": "historical_documents",
-      "description": "Where to access historical Kenya and East Africa documents. DEMO."
+      "description": "Where to find key Kenyan historical documents (constitutions, colonial records, commission reports) in digital archives. Use when someone asks where to read a primary source. document_type matches by name or description; an unmatched type returns a note pointing to Kenya Law and the National Archives. Returns the source label, the document and the sources found, or all sources and the main portals. A pointer list labelled DEMO: availability changes. Read-only; no side effects."
     }
   ],
   "installation": {
