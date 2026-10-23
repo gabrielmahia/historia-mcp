@@ -1,12 +1,20 @@
 """HistoriaMCP — Kenya & East Africa Historical Archives (6 tools). All data DEMO."""
 from __future__ import annotations
 
+from importlib.metadata import PackageNotFoundError
+from importlib.metadata import version as _pkg_version
 from typing import Annotated, Optional
 
 from fastmcp import FastMCP
 from pydantic import Field
 
-mcp = FastMCP(name="historia-mcp", instructions="Kenya and East Africa historical archives via MCP. DEMO.")
+try:
+    _VERSION = _pkg_version("historia-mcp")
+except PackageNotFoundError:  # a source tree that was never installed
+    _VERSION = "0+unknown"
+
+
+mcp = FastMCP(name="historia-mcp", instructions="Kenya and East Africa historical archives via MCP. DEMO.", version=_VERSION)
 
 TIMELINE = [
     {"year": 3000, "event": "Cushitic-speaking herders settle in northern Kenya (earliest known inhabitants)"},
