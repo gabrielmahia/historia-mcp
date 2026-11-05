@@ -3,7 +3,7 @@
 <!-- coverage-adaptive-reasoning:v2 -->
 
 ## What this is
-Kenya and Africa historical archives via MCP. 6 tools.
+Kenya and Africa historical archives via MCP. 7 tools.
 
 ## Read first
 - README.md
