@@ -11,7 +11,7 @@ East African history is well documented but poorly structured for machines — t
 pip install historia-mcp
 ```
 
-## Tools (6)
+## Tools (7)
 
 - **`kenya_history_timeline`** —   
   <sub>args: start_year, end_year</sub>
@@ -57,6 +57,12 @@ Historical reference material compiled from public sources. Oral history in part
 Every tool response carries a `source` field. Responses labelled `DEMO` are
 illustrative reference data, not a live feed — verify against the authority
 named in the response before acting on it.
+
+## Live data
+
+- `wikidata_lookup`: identify people, places and events in [Wikidata](https://www.wikidata.org) (CC0), with IDs, descriptions and links.
+
+Each live answer names its source, attribution and retrieval time; if a service does not answer, the tool returns an error instead of a number. The other tools are unchanged.
 
 ## Part of the East Africa Coordination Stack
 

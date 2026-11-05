@@ -1,7 +1,7 @@
 {
   "$schema": "https://glama.ai/mcp/schemas/1.0.0/server.json",
   "name": "historia-mcp",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "Kenya and Africa historical archives via MCP",
   "license": "MIT",
   "homepage": "https://gabrielmahia.github.io",
@@ -58,6 +58,16 @@
     {
       "name": "historical_documents",
       "description": "Where to find key Kenyan historical documents (constitutions, colonial records, commission reports) in digital archives. Use when someone asks where to read a primary source. document_type matches by name or description; an unmatched type returns a note pointing to Kenya Law and the National Archives. Returns the source label, the document and the sources found, or all sources and the main portals. A pointer list labelled DEMO: availability changes. Read-only; no side effects."
+    },
+    {
+      "name": "wikidata_lookup",
+      "description": "Look up people, places, events and organisations in Wikidata, the free structured knowledge base behind Wikipedia, and get their identifiers and one-line descriptions. Use when someone needs to confirm who or what a name refers to (for example a figure from Kenya's independence era, a place or a movement), to disambiguate similar names, or to find the Wikidata page for further facts. Returns matching entries with their Wikidata ID, label, description and link, the source with its licence and the retrieval time; on a network or service failure it returns an error instead of results. Read-only; contacts an external service.",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      }
     }
   ],
   "installation": {

@@ -1,6 +1,13 @@
 """HistoriaMCP — Kenya & East Africa Historical Archives (6 tools). All data DEMO."""
 from __future__ import annotations
 
+import json
+import urllib.error
+import urllib.parse
+import urllib.request
+from datetime import UTC as _UTC
+from datetime import datetime as _dt
+from datetime import timedelta as _td
 from importlib.metadata import PackageNotFoundError
 from importlib.metadata import version as _pkg_version
 from typing import Annotated, Optional
@@ -172,6 +179,43 @@ def historical_documents(document_type: Annotated[Annotated[str | None, Field(de
         return {"source": "DEMO — Kenya digital archives", "document": document_type, "found": matched or {"note": "Not in sample dataset. Try kenyalaw.org or archives.go.ke"}}
     return {"source": "DEMO", "documents": SOURCES,
             "primary_portals": ["kenyalaw.org (Kenya Law)", "archives.go.ke (KNA)", "knchr.org (KNCHR)", "archive.org"]}
+
+
+# ── Live data (free public services) ─────────────────────────────────
+# Live tools change nothing anywhere, but they contact an outside service, and clients should know that.
+LIVE_READ_ONLY = {"readOnlyHint": True, "destructiveHint": False, "idempotentHint": True, "openWorldHint": True}
+LIVE_TOOLS = {"wikidata_lookup"}
+_LIVE_UA = {"User-Agent": "historia-mcp (https://github.com/gabrielmahia/historia-mcp)", "Accept": "application/json"}
+_LIVE_ERRORS = (urllib.error.URLError, TimeoutError, ValueError, KeyError, TypeError, IndexError)
+
+
+def _live_get(url: str, params: dict | None = None, timeout: float = 20.0):
+    if params:
+        url = url + "?" + urllib.parse.urlencode(params)
+    req = urllib.request.Request(url, headers=_LIVE_UA)
+    with urllib.request.urlopen(req, timeout=timeout) as r:  # fixed https endpoints only
+        return json.loads(r.read().decode("utf-8"))
+
+
+def _live_meta(source: str, attribution: str) -> dict:
+    return {"source": source, "attribution": attribution, "retrieved_at": _dt.now(_UTC).isoformat(timespec="seconds")}
+
+@mcp.tool(name="wikidata_lookup", annotations=LIVE_READ_ONLY, description="Look up people, places, events and organisations in Wikidata, the free structured knowledge base behind Wikipedia, and get their identifiers and one-line descriptions. Use when someone needs to confirm who or what a name refers to (for example a figure from Kenya's independence era, a place or a movement), to disambiguate similar names, or to find the Wikidata page for further facts. Returns matching entries with their Wikidata ID, label, description and link, the source with its licence and the retrieval time; on a network or service failure it returns an error instead of results. Read-only; contacts an external service.")
+def wikidata_lookup(query: Annotated[str, Field(description="Name or phrase to search for, for example Dedan Kimathi, Mau Mau or Lamu.")],
+                    limit: Annotated[int, Field(description="How many matches to return, between 1 and 10.")] = 5) -> dict:
+    meta = _live_meta("LIVE — Wikidata API (wikidata.org)", "Wikidata, CC0 public domain dedication.")
+    q = (query or "").strip()
+    if not 1 <= len(q) <= 100:
+        return {"error": "query must be between 1 and 100 characters", **meta}
+    if not 1 <= limit <= 10:
+        return {"error": "limit must be between 1 and 10", **meta}
+    try:
+        hits = _live_get("https://www.wikidata.org/w/api.php", {"action": "wbsearchentities", "search": q, "language": "en", "format": "json", "limit": limit})["search"]
+    except _LIVE_ERRORS as e:
+        return {"error": f"Wikidata did not return usable results ({type(e).__name__}); no results are given without it. Try again later.", **meta}
+    results = [{"id": h["id"], "label": h.get("label"), "description": h.get("description"), "url": f"https://www.wikidata.org/wiki/{h['id']}"} for h in hits]
+    return {"query": q, "results": results, "note": "Wikidata is community-edited: check important facts against the sources cited on each entry.", **meta}
+
 
 def main() -> None:
     """Console entry point."""
