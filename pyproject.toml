@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "historia-mcp"
-version = "0.1.11"
+version = "0.1.12"
 description = "Kenya and Africa historical archives via MCP. 7 tools."
 readme = "README.md"
 license = "MIT"
@@ -23,6 +23,7 @@ classifiers = [
 historia-mcp = "historia_mcp.server:mcp.run"
 
 [project.urls]
+Issues = "https://github.com/gabrielmahia/historia-mcp/issues"
 Homepage = "https://github.com/gabrielmahia/historia-mcp"
 Documentation = "https://github.com/gabrielmahia/nairobi-stack"
 "MCP Registry" = "https://registry.modelcontextprotocol.io"
