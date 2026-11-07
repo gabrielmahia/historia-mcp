@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "historia-mcp"
+abstract: "Kenya and Africa historical archives via MCP. 7 tools."
+version: "0.1.12"
+authors:
+  - family-names: "Mahia"
+    given-names: "Gabriel"
+repository-code: "https://github.com/gabrielmahia/historia-mcp"
+license: "MIT"
